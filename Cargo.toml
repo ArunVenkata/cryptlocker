@@ -1,0 +1,18 @@
+[package]
+name = "cryptlocker"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.0", features = ["derive"] }
+aes-gcm = "0.10"  # Provides AES-GCM encryption
+aes = "0.8"       # AES block cipher
+rand = "0.8"      # Random number generation
+anyhow = "1.0"    # Error handling
+argon2 = "0.3"    # Password hashing
+rpassword = "5.0" # Secure password input
+password-hash = "0.3"
+base64 = "0.13"
+indicatif = "0.17"
+walkdir = "2.3.2"
+zip = "0.5.13"
