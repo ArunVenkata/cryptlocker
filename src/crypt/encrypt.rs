@@ -5,7 +5,11 @@ use rand::rngs::OsRng;
 use rand::RngCore;
 use std::fs::{self, File};
 use std::io::{Read, Write};
+
+#[cfg(unix)]
 use std::os::unix::fs::PermissionsExt;
+
+
 use std::path::{Path, PathBuf};
 
 use crate::crypt::utils::{compress_folder, create_progress_bar, derive_key, sanitize_path};
@@ -53,7 +57,12 @@ pub fn encrypt_file(input_path: &Path, output_path: &Path, password: &str) -> Re
     }
     progress_bar.finish_with_message("Encryption complete!");
 
-    fs::set_permissions(&temp_path, fs::Permissions::from_mode(0o600))?;
+    #[cfg(unix)]
+    {
+        fs::set_permissions(&temp_path, fs::Permissions::from_mode(0o600))?;
+    }
+
+
     fs::rename(&temp_path, &sanitized_output_path)?;
     println!("File encrypted successfully: {:?}", &sanitized_output_path);
 
